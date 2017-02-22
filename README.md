@@ -1,0 +1,1 @@
+#Hatch silex provider for Assets microservice
