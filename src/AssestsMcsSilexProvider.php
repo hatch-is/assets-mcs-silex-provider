@@ -2,8 +2,8 @@
 
 namespace AssetsMcs;
 
-use Silex\Apllication;
-use Silec\ServiceProviderInterface;
+use Silex\Application;
+use Silex\ServiceProviderInterface;
 
 /**
  * Class AssestsMcsSilexProvider
