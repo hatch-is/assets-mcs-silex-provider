@@ -197,18 +197,29 @@ class Processor
                 'statusCode' => 204
             ];
         } catch (GuzzleClientException $e) {
-            $message = $this->formatErrorMessage($e);
-            throw new \Exception(json_encode($message), 0, $e);
+
+            if ($e->getCode() >= 400 && $e->getCode() <= 499) {
+                $code = $e->getCode();
+            } else {
+                $code = 0;
+            }
+            $message = $this->formatErrorMessage($e, $code);
+            throw new \Exception(json_encode($message), $code, $e);
         }
     }
 
     /**
-     * @param $httpException
+     * @param GuzzleClientException $httpException
      *
      * @return array
      */
-    public function formatErrorMessage($httpException)
+    public function formatErrorMessage($httpException, $code = 0)
     {
+        if ($code == 0) {
+            $m = 'Something bad happened with Assets service';
+        } else {
+            $m = $httpException->getMessage();
+        }
         $message = [
             'message'  => 'Something bad happened with Assets service',
             'request'  => [
