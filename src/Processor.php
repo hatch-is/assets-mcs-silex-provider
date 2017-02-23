@@ -210,6 +210,7 @@ class Processor
 
     /**
      * @param GuzzleClientException $httpException
+     * @param $code
      *
      * @return array
      */
@@ -221,7 +222,7 @@ class Processor
             $m = $httpException->getMessage();
         }
         $message = [
-            'message'  => 'Something bad happened with Assets service',
+            'message'  => $m,
             'request'  => [
                 'headers' => $httpException->getRequest()->getHeaders(),
                 'body'    => $httpException->getRequest()->getBody()
