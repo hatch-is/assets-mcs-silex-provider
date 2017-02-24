@@ -198,7 +198,11 @@ class Processor
             ];
         } catch (GuzzleClientException $e) {
             if ($e->getCode() >= 400 && $e->getCode() <= 499) {
-                throw new \Exception($e->getMessage(), $e->getCode());
+                $message = $e->getResponse()->getBody()->getContents();
+                $message = json_decode($message, true);
+                $message = isset($message['message']) ? $message['message']
+                    : "Something bad happened with Assets service";
+                throw new \Exception($message, $e->getCode());
             } else {
                 $message = $this->formatErrorMessage($e);
                 throw new \Exception(json_encode($message), 0, $e);
@@ -208,7 +212,7 @@ class Processor
 
     /**
      * @param GuzzleClientException $httpException
-     * @param $code
+     * @param                       $code
      *
      * @return array
      */
