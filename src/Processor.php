@@ -26,69 +26,84 @@ class Processor
     }
 
 
-    public function Read()
+    public function Read($locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
             'get',
             $this->getPath('/assets/collections'),
-            ['content-type' => 'application/json']
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ]
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function ReadOne($id)
+    public function ReadOne($id, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
             'get',
             $this->getPath(sprintf('/assets/collections/%s', $id)),
-            ['content-type' => 'application/json']
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ]
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function Create($data)
+    public function Create($data, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
             'post',
             $this->getPath('/assets/collections'),
-            ['content-type' => 'application/json'],
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ],
             json_encode($data)
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function Update($id, $data)
+    public function Update($id, $data, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
             'put',
             $this->getPath(sprintf('/assets/collections/%s', $id)),
-            ['content-type' => 'application/json'],
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ],
             json_encode($data)
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function Delete($id)
+    public function Delete($id, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
             'delete',
             $this->getPath(sprintf('/assets/collections/%s', $id)),
-            ['content-type' => 'application/json']
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ]
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function ItemsRead($collectionId)
+    public function ItemsRead($collectionId, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
@@ -96,13 +111,16 @@ class Processor
             $this->getPath(
                 sprintf('/assets/collections/%s/items', $collectionId)
             ),
-            ['content-type' => 'application/json']
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ]
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function ItemsReadOne($collectionId, $itemId)
+    public function ItemsReadOne($collectionId, $itemId, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
@@ -112,13 +130,16 @@ class Processor
                     '/assets/collections/%s/items/%s', $collectionId, $itemId
                 )
             ),
-            ['content-type' => 'application/json']
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ]
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function ItemsCreate($collectionId, $data)
+    public function ItemsCreate($collectionId, $data, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
@@ -128,14 +149,17 @@ class Processor
                     '/assets/collections/%s/items', $collectionId
                 )
             ),
-            ['content-type' => 'application/json'],
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ],
             json_encode($data)
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function ItemsUpdate($collectionId, $itemId, $data)
+    public function ItemsUpdate($collectionId, $itemId, $data, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
@@ -145,14 +169,17 @@ class Processor
                     '/assets/collections/%s/items/%s', $collectionId, $itemId
                 )
             ),
-            ['content-type' => 'application/json'],
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ],
             json_encode($data)
         );
         $response = $this->send($client, $request);
         return $response;
     }
 
-    public function ItemsDelete($collectionId, $itemId)
+    public function ItemsDelete($collectionId, $itemId, $locationGroup)
     {
         $client = new GuzzleClient();
         $request = new Request(
@@ -162,7 +189,10 @@ class Processor
                     '/assets/collections/%s/items/%s', $collectionId, $itemId
                 )
             ),
-            ['content-type' => 'application/json']
+            [
+                'content-type' => 'application/json',
+                'x-location-group' => $locationGroup
+            ]
         );
         $response = $this->send($client, $request);
         return $response;
